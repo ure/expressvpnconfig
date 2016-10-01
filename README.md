@@ -81,6 +81,7 @@ hostnamectl set-hostname vpn-us
 >
 ```
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
+sysctl -p /etc/sysctl.d/98-ipforwarding.conf
 ```
 >
 > add NAT rules to iptables and enable iptables on boot
@@ -115,8 +116,8 @@ echo "172.16.2.0/24 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-et
 wget https://download.expressvpn.xyz/clients/linux/expressvpn-1.1.0-1.x86_64.rpm
 rpm -Uv expressvpn-1.1.0-1.x86_64.rpm
 expressvpn activate
-expressvpn connect wsd2
 expressvpn autoconnect on
 systemctl enable expressvpn
+expressvpn connect uswd2
 ```
 
