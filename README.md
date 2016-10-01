@@ -38,7 +38,7 @@ virt-install \
    --name=vpn-us \
    --controller type=scsi,model=virtio-scsi \
    --disk path=/var/lib/libvirt/images/vpn-us.dsk,size=8,sparse=true,cache=none,bus=scsi \
-   --graphics vnc,listen=0.0.0.0,port=5951 \
+   --graphics vnc,listen=0.0.0.0,port=5950 \
    --network bridge=kvm0-vlan21 \
    --network bridge=kvm0-vlan50 \
    --vcpus=1 --ram=1024 \
@@ -46,7 +46,7 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kvm host on port 5951
+> connect with vnc to kvm host on port 5950
 > start vhost
 ```
 virsh start vpn-us
@@ -86,7 +86,7 @@ echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
 > add NAT rules to iptables and enable iptables on boot
 >
 ```
-iptables -A FORWARD -o eth0 -i tun0 -s 192.168.1.0/24 -m conntrack --ctstate NEW -j ACCEPT
+iptables -A FORWARD -o eth0 -i tun0 -s 192.168.0.0/24 -m conntrack --ctstate NEW -j ACCEPT
 iptables -A FORWARD  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -F POSTROUTING
 iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
