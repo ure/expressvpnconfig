@@ -46,7 +46,7 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kmv host on port 5951
+> connect with vnc to kvm host on port 5951
 > start vhost
 ```
 virsh start vpn-us
@@ -55,39 +55,69 @@ virsh start vpn-us
 ```
 virsh autostart vpn-us
 ```
+
 # vhost
-### config ethernet via nmtui
-
-### instal prereq
-
+> config bridge(s) and add vlans via nmtui
+>
 ```
-yum -y install vim iptables-services dnsmasq net-tools wget mtr
-
-#ip forwarding
+> nmtui
+```
+>
+> install yum packages
+>
+```
+yum -y install vim htop epel-release 
+yum -y install iftop mosh iptables-services dnsmasq net-tools wget
+yum -y update
+```
+>
+> set hostname
+>
+```
+hostnamectl set-hostname vpn-us
+```
+>
+> enable ip forwarding
+>
+```
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
-
-#iptables
+```
+>
+> add NAT rules to iptables and enable iptables on boot
+>
+```
 iptables -A FORWARD -o eth0 -i tun0 -s 192.168.1.0/24 -m conntrack --ctstate NEW -j ACCEPT
 iptables -A FORWARD  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -F POSTROUTING
 iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-save > /etc/sysconfig/iptables
 systemctl enable iptables
-
+```
+>
+> install dnsmasq (dhcp) and enable
+>
+```
 #dnsmasq
 echo "interface=eth1
-dhcp-range=192.168.1.50,192.168.1.150,12h
+dhcp-range=192.168.0.50,192.1680.150,12h
 conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
 systemctl enable dnsmasq
-
-#download expressvpn
-wget https://download.expressvpn.xyz/clients/linux/expressvpn-1.1.0-1.x86_64.rpm
-rpm -Uv expressvpn<tab>
-expressvpn activate
-expressvpn connect ukel
-expressvpn autoconnect on
-systemctl enable expressvpn
-
-# add static route so we can still get in
+```
+>
+>  add static route so we can still get in after vpn connects
+>  
+```
 echo "172.16.2.0/24 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
 ```
+>
+>download expressvpn / activate / connect / enable autoconnect and enable on boot
+>
+```
+wget https://download.expressvpn.xyz/clients/linux/expressvpn-1.1.0-1.x86_64.rpm
+rpm -Uv expressvpn-1.1.0-1.x86_64.rpm
+expressvpn activate
+expressvpn connect wsd2
+expressvpn autoconnect on
+systemctl enable expressvpn
+```
+
