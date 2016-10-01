@@ -4,6 +4,11 @@ ExpressVPN Config KVM (el7)
 
 # kvm
 
+>
+> vlan21 (virt network 192.168.192.* from router)
+> vlan50 vpn-us (192.168.0.x from vhost dnsmasq)
+> vlan51 vpn-uk (192.168.1.X from vhost dnsmasq)
+>
 > config bridge(s) and add vlans via nmtui
 >
 ```
@@ -56,7 +61,7 @@ virsh start vpn-us
 virsh autostart vpn-us
 ```
 
-# vhost
+# vhost (vpn-us)
 > config bridge(s) and add vlans via nmtui
 >
 ```
@@ -108,6 +113,7 @@ systemctl enable dnsmasq
 >  
 ```
 echo "172.16.2.0/24 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
+ip ro ad 172.16.2.0/24 via 192.168.192.1
 ```
 >
 >download expressvpn / activate / connect / enable autoconnect and enable on boot
