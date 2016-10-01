@@ -4,13 +4,17 @@ expressvpn on el7 for routing add home on vlans
 on kvm
 (config bridge and vlans via nmtui)
 
+yum -y groupinstall "Virtualization Tools"
+yum -y install vim htop epel-release
+yum -y install iftop
+
 hostnamectl set-hostname kvm
 
 on vhost
 (config ethernet via nmtui)
 
 # instal prereq
-yum install vim iptables-services dnsmasq net-tools wget mtr
+yum -y install vim iptables-services dnsmasq net-tools wget mtr
 
 #ip forwarding
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
