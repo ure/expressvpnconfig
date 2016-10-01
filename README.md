@@ -215,5 +215,5 @@ rpm -Uv expressvpn-1.1.0-1.x86_64.rpm
 expressvpn activate
 expressvpn autoconnect on
 systemctl enable expressvpn
-expressvpn connect uswd2
+expressvpn connect ukel
 ```
