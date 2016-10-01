@@ -107,13 +107,14 @@ echo "interface=eth1
 dhcp-range=192.168.0.50,192.1680.150,12h
 conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
 systemctl enable dnsmasq
+systemctl start dnsmasq
 ```
 >
 >  add static route so we can still get in after vpn connects
 >  
 ```
-echo "172.16.2.0/24 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
-ip ro ad 172.16.2.0/24 via 192.168.192.1
+echo "172.16.0.0/16 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
+ip ro ad 172.16.0.0/16 via 192.168.192.1
 ```
 >
 >download expressvpn / activate / connect / enable autoconnect and enable on boot
