@@ -97,7 +97,6 @@ systemctl enable iptables
 > install dnsmasq (dhcp) and enable
 >
 ```
-#dnsmasq
 echo "interface=eth1
 dhcp-range=192.168.0.50,192.1680.150,12h
 conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
