@@ -1,5 +1,5 @@
 
-ExpressVPN Config KVM
+ExpressVPN Config KVM (el7)
 -----
 
 # kvm
@@ -23,14 +23,16 @@ yum -y install iftop mosh mtr
 ```
 hostnamectl set-hostname kvm
 ```
-
-# download centos
+>
+> download centos
+>
+```
 mkdir -p /var/storage/os/
 curl -L http://centos.weepee.org/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso > /var/storage/os/centos7.iso
 ```
-
-### create vpn host
-
+>
+> create vpn host
+>
 ```
 virt-install \
    --name=vpn-us \
@@ -44,7 +46,15 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-
+> connect with vnc to kmv host on port 5951
+> start vhost
+```
+virsh start vpn-us
+```
+> autostart vhost after reboots
+```
+virsh autostart vpn-us
+```
 # vhost
 ### config ethernet via nmtui
 
