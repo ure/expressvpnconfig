@@ -10,6 +10,12 @@ yum -y install iftop
 
 hostnamectl set-hostname kvm
 
+mkdir -p /var/storage/os/
+
+curl -L http://centos.weepee.org/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso > /var/storage/os/centos7.iso
+
+(create vpns with install scripts)
+
 on vhost
 (config ethernet via nmtui)
 
