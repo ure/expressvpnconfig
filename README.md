@@ -1,25 +1,52 @@
-# expressvpnconfig
-expressvpn on el7 for routing add home on vlans
 
-on kvm
-(config bridge and vlans via nmtui)
+ExpressVPN Config KVM
+-----
 
+# kvm
+
+### config bridge(s) and add vlans via nmtui
+
+> install yum packages
+>
+```
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
-yum -y install iftop
-
+yum -y install iftop mosh mtr
+```
+>
+> set hostname
+>
+```
 hostnamectl set-hostname kvm
+```
 
+# download centos
 mkdir -p /var/storage/os/
-
 curl -L http://centos.weepee.org/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso > /var/storage/os/centos7.iso
+```
 
-(create vpns with install scripts)
+### create vpn host
 
-on vhost
-(config ethernet via nmtui)
+```
+virt-install \
+   --name=vpn-us \
+   --controller type=scsi,model=virtio-scsi \
+   --disk path=/var/lib/libvirt/images/vpn-us.dsk,size=8,sparse=true,cache=none,bus=scsi \
+   --graphics vnc,listen=0.0.0.0,port=5951 \
+   --network bridge=kvm0-vlan21 \
+   --network bridge=kvm0-vlan50 \
+   --vcpus=1 --ram=1024 \
+   --cdrom=/var/storage/os/CentOS-7-x86_64-Minimal-1511.iso \
+   --os-type=linux \
+   --os-variant=rhel7
+```
 
-# instal prereq
+# vhost
+### config ethernet via nmtui
+
+### instal prereq
+
+```
 yum -y install vim iptables-services dnsmasq net-tools wget mtr
 
 #ip forwarding
@@ -49,3 +76,4 @@ systemctl enable expressvpn
 
 # add static route so we can still get in
 echo "172.16.2.0/24 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
+```
