@@ -81,7 +81,7 @@ virsh start vpn-uk
 ```
 virsh autostart vpn-us
 virsh autostart vpn-uk
-systemctl enable libvirtd
+systemctl enable libvirtd.service
 ```
 
 # vhost (vpn-us)
