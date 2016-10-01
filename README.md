@@ -1,6 +1,11 @@
 # expressvpnconfig
 expressvpn on el7 for routing add home on vlans
 
+on kvm
+(config bridge and vlans via nmtui)
+
+hostnamectl set-hostname kvm
+
 on vhost
 (config ethernet via nmtui)
 
