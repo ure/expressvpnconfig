@@ -20,7 +20,7 @@ ExpressVPN Config KVM (el7)
 ```
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
-yum -y install iftop mosh mtr tcpdump
+yum -y install iftop mosh mtr tcpdump virt-viewer
 ```
 >
 > set hostname
@@ -36,7 +36,7 @@ mkdir -p /var/storage/os/
 curl -L http://centos.weepee.org/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso > /var/storage/os/centos7.iso
 ```
 >
-> create vpn host
+> create vpn-us host
 >
 ```
 virt-install \
@@ -47,18 +47,41 @@ virt-install \
    --network bridge=kvm0-vlan21 \
    --network bridge=kvm0-vlan50 \
    --vcpus=1 --ram=1024 \
-   --cdrom=/var/storage/os/CentOS-7-x86_64-Minimal-1511.iso \
+   --cdrom=/var/storage/os/centos7.iso \
    --os-type=linux \
    --os-variant=rhel7
 ```
 > connect with vnc to kvm host on port 5950
+>
+> create vpn-uk host
+>
+```
+virt-install \
+   --name=vpn-uk \
+   --controller type=scsi,model=virtio-scsi \
+   --disk path=/var/lib/libvirt/images/vpn-uk.dsk,size=8,sparse=true,cache=none,bus=scsi \
+   --graphics vnc,listen=0.0.0.0,port=5951 \
+   --network bridge=kvm0-vlan21 \
+   --network bridge=kvm0-vlan51 \
+   --vcpus=1 --ram=1024 \
+   --cdrom=/var/storage/os/centos7.iso \
+   --os-type=linux \
+   --os-variant=rhel7
+```
+> connect with vnc to kvm host on port 5951
+>
+> 
 > start vhost
 ```
 virsh start vpn-us
+virsh start vpn-uk
 ```
 > autostart vhost after reboots
+> 
 ```
 virsh autostart vpn-us
+virsh autostart vpn-uk
+systemctl enable libvirtd
 ```
 
 # vhost (vpn-us)
