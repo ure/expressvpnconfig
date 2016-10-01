@@ -20,7 +20,7 @@ ExpressVPN Config KVM (el7)
 ```
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
-yum -y install iftop mosh mtr
+yum -y install iftop mosh mtr tcpdump
 ```
 >
 > set hostname
@@ -72,7 +72,7 @@ virsh autostart vpn-us
 >
 ```
 yum -y install vim htop epel-release 
-yum -y install iftop mosh iptables-services dnsmasq net-tools wget
+yum -y install iftop mosh iptables-services dnsmasq net-tools wget tcpdump
 yum -y update
 ```
 >
