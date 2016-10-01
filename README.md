@@ -43,7 +43,7 @@ virt-install \
    --name=vpn-us \
    --controller type=scsi,model=virtio-scsi \
    --disk path=/var/lib/libvirt/images/vpn-us.dsk,size=8,sparse=true,cache=none,bus=scsi \
-   --graphics vnc,listen=0.0.0.0,port=5950 \
+   --graphics vnc,listen=0.0.0.0 \
    --network bridge=kvm0-vlan21 \
    --network bridge=kvm0-vlan50 \
    --vcpus=1 --ram=1024 \
@@ -51,7 +51,7 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kvm host on port 5950
+> connect with vnc to kvm host (virsh vncdisplay)
 >
 > create vpn-uk host
 >
@@ -60,7 +60,7 @@ virt-install \
    --name=vpn-uk \
    --controller type=scsi,model=virtio-scsi \
    --disk path=/var/lib/libvirt/images/vpn-uk.dsk,size=8,sparse=true,cache=none,bus=scsi \
-   --graphics vnc,listen=0.0.0.0,port=5951 \
+   --graphics vnc,listen=0.0.0.0 \
    --network bridge=kvm0-vlan21 \
    --network bridge=kvm0-vlan51 \
    --vcpus=1 --ram=1024 \
@@ -68,7 +68,7 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kvm host on port 5951
+> connect with vnc to kvm host (virsh vncdisplay)
 >
 > 
 > start vhost
