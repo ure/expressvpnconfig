@@ -5,7 +5,7 @@ on kvm
 (config bridge and vlans via nmtui)
 
 yum -y groupinstall "Virtualization Tools"
-yum -y install vim htop epel-release
+yum -y install vim htop epel-release virt-install
 yum -y install iftop
 
 hostnamectl set-hostname kvm
