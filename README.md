@@ -96,27 +96,21 @@ iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-save > /etc/sysconfig/iptables
 systemctl enable iptables
 ```
->
-> install dnsmasq (dhcp) and enable
->
-```
+install dnsmasq (dhcp) and enable
+```shell
 echo "interface=eth1
 dhcp-range=192.168.0.50,192.168.0.150,12h
 conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
 systemctl enable dnsmasq
 systemctl start dnsmasq
 ```
->
->  add static route so we can still get in after vpn connects
->  
-```
+ add static route so we can still get in after vpn connects
+```shell
 echo "172.16.0.0/16 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
 ip ro ad 172.16.0.0/16 via 192.168.192.1
 ```
->
->download expressvpn / activate / connect / enable autoconnect and enable on boot
->
-```
+download expressvpn / activate / connect / enable autoconnect and enable on boot
+```shell
 wget https://download.expressvpn.xyz/clients/linux/expressvpn-1.1.0-1.x86_64.rpm
 rpm -Uv expressvpn-1.1.0-1.x86_64.rpm
 expressvpn activate
@@ -124,38 +118,28 @@ expressvpn autoconnect on
 systemctl enable expressvpn
 expressvpn connect uswd2
 ```
-
 # vhost (vpn-uk)
 > config bridge(s) and add vlans via nmtui
->
-```
-> nmtui
-```
->
-> install yum packages
->
-```
+```shell
+nmtui
+```shell
+install yum packages
+```shell
 yum -y install vim htop epel-release 
 yum -y install iftop mosh iptables-services dnsmasq net-tools wget tcpdump
 yum -y update
 ```
->
-> set hostname
->
-```
+set hostname
+```shell
 hostnamectl set-hostname vpn-uk
 ```
->
-> enable ip forwarding
->
-```
+enable ip forwarding
+```shell
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
 sysctl -p /etc/sysctl.d/98-ipforwarding.conf
 ```
->
-> add NAT rules to iptables and enable iptables on boot
->
-```
+add NAT rules to iptables and enable iptables on boot
+```shell
 iptables -A FORWARD -o eth0 -i tun0 -s 192.168.1.0/24 -m conntrack --ctstate NEW -j ACCEPT
 iptables -A FORWARD  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -F POSTROUTING
@@ -163,27 +147,21 @@ iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 iptables-save > /etc/sysconfig/iptables
 systemctl enable iptables
 ```
->
-> install dnsmasq (dhcp) and enable
->
-```
+install dnsmasq (dhcp) and enable
+```shell
 echo "interface=eth1
 dhcp-range=192.168.1.50,192.168.1.150,12h
 conf-dir=/etc/dnsmasq.d" > /etc/dnsmasq.conf
 systemctl enable dnsmasq
 systemctl start dnsmasq
 ```
->
->  add static route so we can still get in after vpn connects
->  
-```
+add static route so we can still get in after vpn connects  
+```shell
 echo "172.16.0.0/16 via 192.168.192.1" > /etc/sysconfig/network-scripts/route-eth0
 ip ro ad 172.16.0.0/16 via 192.168.192.1
 ```
->
->download expressvpn / activate / connect / enable autoconnect and enable on boot
->
-```
+download expressvpn / activate / connect / enable autoconnect and enable on boot
+```shell
 wget https://download.expressvpn.xyz/clients/linux/expressvpn-1.1.0-1.x86_64.rpm
 rpm -Uv expressvpn-1.1.0-1.x86_64.rpm
 expressvpn activate
