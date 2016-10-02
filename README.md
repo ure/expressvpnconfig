@@ -6,13 +6,13 @@ vlan50 vpn-us (192.168.0.x from vhost dnsmasq)
 vlan51 vpn-uk (192.168.1.X from vhost dnsmasq)  
 
 config bridge(s) and add vlans via nmtui
-```sh
+```shell
 nmtui
 ```
 >
 > install yum packages
 >
-```sh
+```shell
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
 yum -y install iftop mosh mtr tcpdump virt-viewer libvirt-daemon-lxc
@@ -20,7 +20,7 @@ yum -y install iftop mosh mtr tcpdump virt-viewer libvirt-daemon-lxc
 >
 > set hostname
 >
-```sh
+```shell
 hostnamectl set-hostname kvm
 ```
 >
