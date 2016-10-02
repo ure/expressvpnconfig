@@ -1,5 +1,5 @@
-### ExpressVPN Config KVM (el7)
-# kvm
+# ExpressVPN Config KVM (el7)
+### kvm
 vlan21 (virt network 192.168.192.* from router)  
 vlan50 vpn-us (192.168.0.x from vhost dnsmasq)  
 vlan51 vpn-uk (192.168.1.X from vhost dnsmasq)  
@@ -66,7 +66,7 @@ virsh autostart vpn-us
 virsh autostart vpn-uk
 systemctl enable libvirtd.service
 ```
-# vhost (vpn-us)
+### vhost (vpn-us)
 config bridge(s) and add vlans via nmtui
 ```
 nmtui
@@ -117,7 +117,7 @@ expressvpn autoconnect on
 systemctl enable expressvpn
 expressvpn connect uswd2
 ```
-# vhost (vpn-uk)
+### vhost (vpn-uk)
 > config bridge(s) and add vlans via nmtui
 ```shell
 nmtui
