@@ -65,6 +65,7 @@ virsh autostart vpn-us
 virsh autostart vpn-uk
 systemctl enable libvirtd.service
 ```
+
 ### vhost (vpn-us)
 > config bridge(s) and add vlans via nmtui
 ```
