@@ -1,4 +1,4 @@
-# ExpressVPN Config KVM (el7)
+ExpressVPN Config KVM (el7)
 ----------
 # kvm
 vlan21 (virt network 192.168.192.* from router)  
