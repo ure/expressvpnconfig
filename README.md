@@ -117,6 +117,7 @@ expressvpn autoconnect on
 systemctl enable expressvpn
 expressvpn connect uswd2
 ```
+
 ### vhost (vpn-uk)
 > config bridge(s) and add vlans via nmtui
 ```shell
