@@ -36,8 +36,7 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-connect with vnc to kvm host (virsh vncdisplay)  
-  
+connect with vnc to kvm host (virsh vncdisplay)    
 create vpn-uk host
 ```shell
 virt-install \
