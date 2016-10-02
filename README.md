@@ -9,31 +9,23 @@ config bridge(s) and add vlans via nmtui
 ```shell
 nmtui
 ```
->
-> install yum packages
->
+install yum packages
 ```shell
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
 yum -y install iftop mosh mtr tcpdump virt-viewer libvirt-daemon-lxc
 ```
->
-> set hostname
->
+set hostname
 ```shell
 hostnamectl set-hostname kvm
 ```
->
-> download centos
->
-```
+download centos
+```shell
 mkdir -p /var/storage/os/
 curl -L http://centos.weepee.org/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso > /var/storage/os/centos7.iso
 ```
->
-> create vpn-us host
->
-```
+create vpn-us host
+```shell
 virt-install \
    --name=vpn-us \
    --controller type=scsi,model=virtio-scsi \
@@ -46,11 +38,10 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kvm host (virsh vncdisplay)
->
-> create vpn-uk host
->
-```
+connect with vnc to kvm host (virsh vncdisplay)  
+  
+create vpn-uk host
+```shell
 virt-install \
    --name=vpn-uk \
    --controller type=scsi,model=virtio-scsi \
@@ -63,53 +54,41 @@ virt-install \
    --os-type=linux \
    --os-variant=rhel7
 ```
-> connect with vnc to kvm host (virsh vncdisplay)
->
-> 
-> start vhost
-```
+connect with vnc to kvm host (virsh vncdisplay)  
+  
+start vhost
+```shell
 virsh start vpn-us
 virsh start vpn-uk
 ```
-> autostart vhost after reboots
-> 
+autostart vhost after reboots
 ```
 virsh autostart vpn-us
 virsh autostart vpn-uk
 systemctl enable libvirtd.service
 ```
-
 # vhost (vpn-us)
-> config bridge(s) and add vlans via nmtui
->
+config bridge(s) and add vlans via nmtui
 ```
-> nmtui
+nmtui
 ```
->
-> install yum packages
->
-```
+install yum packages
+```shell
 yum -y install vim htop epel-release 
 yum -y install iftop mosh iptables-services dnsmasq net-tools wget tcpdump
 yum -y update
-```
->
-> set hostname
->
+```shell
+set hostname
 ```
 hostnamectl set-hostname vpn-us
 ```
->
-> enable ip forwarding
->
-```
+enable ip forwarding
+```shell
 echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforwarding.conf
 sysctl -p /etc/sysctl.d/98-ipforwarding.conf
 ```
->
-> add NAT rules to iptables and enable iptables on boot
->
-```
+add NAT rules to iptables and enable iptables on boot
+```shell
 iptables -A FORWARD -o eth0 -i tun0 -s 192.168.0.0/24 -m conntrack --ctstate NEW -j ACCEPT
 iptables -A FORWARD  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -t nat -F POSTROUTING
