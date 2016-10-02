@@ -1,23 +1,17 @@
-
-ExpressVPN Config KVM (el7)
------
-
-# kvm
-
->
-> vlan21 (virt network 192.168.192.* from router)
-> vlan50 vpn-us (192.168.0.x from vhost dnsmasq)
-> vlan51 vpn-uk (192.168.1.X from vhost dnsmasq)
->
-> config bridge(s) and add vlans via nmtui
->
-```
-> nmtui
+# ExpressVPN Config KVM (el7)
+----------
+### kvm
+vlan21 (virt network 192.168.192.* from router)
+vlan50 vpn-us (192.168.0.x from vhost dnsmasq)
+vlan51 vpn-uk (192.168.1.X from vhost dnsmasq)
+config bridge(s) and add vlans via nmtui
+```sh
+nmtui
 ```
 >
 > install yum packages
 >
-```
+```sh
 yum -y groupinstall "Virtualization Tools"
 yum -y install vim htop epel-release virt-install
 yum -y install iftop mosh mtr tcpdump virt-viewer libvirt-daemon-lxc
@@ -25,7 +19,7 @@ yum -y install iftop mosh mtr tcpdump virt-viewer libvirt-daemon-lxc
 >
 > set hostname
 >
-```
+```sh
 hostnamectl set-hostname kvm
 ```
 >
